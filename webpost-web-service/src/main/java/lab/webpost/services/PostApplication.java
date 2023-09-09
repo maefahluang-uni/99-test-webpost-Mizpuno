@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
+@SpringBootApplication
+@EntityScan(basePackages = {"lab.webpost.domain"})
 public class PostApplication {
      public static void main(String[] args) {
         SpringApplication.run(PostApplication.class, args);

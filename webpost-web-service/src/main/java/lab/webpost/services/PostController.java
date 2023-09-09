@@ -23,34 +23,63 @@ public class PostController {
     PostRepository postRepository;
 
     // TODO: get all Posts
+    @GetMapping("/posts")
     public ResponseEntity<List<Post>> getPosts() {
-        return null;
+        List<Post> posts = postRepository.findAll();
+        return ResponseEntity.ok(posts);
     }
 
     //TODO: getting post by id
-    public ResponseEntity<Post> getPostById( Long id) {
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
         // TODO: check if post is null
-        return null;
+        Optional<Post> postOpt = postRepository.findById(id);
+
+        if (!postOpt.isPresent()) {
+            return new ResponseEntity<> (HttpStatus.NOT_FOUND);
+        }
+
+        Post post = postOpt.get();
+        return ResponseEntity.ok(post);
     }
 
     //TODO: find by title
-    public ResponseEntity<List<Post>> getPostByTitle( String title) {
-        return null;
+    @GetMapping("/posts/title/{title}")
+    public ResponseEntity<List<Post>> getPostByTitle(@PathVariable String title) {
+        List<Post> post = postRepository.findByTitle(title);
+
+        if (post.isEmpty()) {
+            return new ResponseEntity<> (HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(post);
     }
 
     // TODO: adding new post
-    public ResponseEntity<String> addPost( Post post) {
-        return null;
+    @PostMapping("/posts")
+    public ResponseEntity<String> addPost(@RequestBody Post post) {
+        postRepository.save(post);
+        return ResponseEntity.status(201).body("Post created.");
     }
 
     // TODO: delete post by id
-    public ResponseEntity<String> deletePost( Long id) {
-        return null;
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id) {
+        Optional<Post> postOpt = postRepository.findById(id);
+
+        if (!postOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id not found.");
+        }
+
+        postRepository.deleteById(id);
+        return ResponseEntity.status(204).body("Post deleted.");
     }
 
     //TODO: delete all posts
+    @DeleteMapping("/posts")
     public ResponseEntity<String> deleteAllPosts() {
-        return null;
+        postRepository.deleteAll();
+        return ResponseEntity.status(204).body("Truncated all.");
     }
 
 }

@@ -8,6 +8,6 @@ import lab.webpost.domain.Post;
 
 public interface PostRepository extends CrudRepository<Post, Long>{
         //TODO: add necessary devied methods
-
-
+        public List<Post> findAll();
+        public List<Post> findByTitle(String title);
 }

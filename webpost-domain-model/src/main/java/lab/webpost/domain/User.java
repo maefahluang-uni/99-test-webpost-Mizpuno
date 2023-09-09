@@ -7,10 +7,12 @@ import javax.persistence.Id;
 
 
 //TODO: add annotation for entity
-
+@Entity
 public class User {
 
     //TODO: add annotation for id
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
     private String email;
