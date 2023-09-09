@@ -32,7 +32,7 @@
                     var postList = $('#postList');
                     postList.empty(); // Clear previous posts
                     response.forEach(function (post) {
-                        var postItem = $('<div class="post-item"><strong>' + post.author.username + '</strong>: ' + post.body + '</div>');
+                        var postItem = $('<div class="post-item"><strong>' + post.title + '</strong>: ' + post.body + "  ->" +post.createdAt + '</div>');
                         postList.append(postItem);
                     });
                 },
@@ -49,10 +49,10 @@
             var postData = {
                 title:  $('#title').val(),
                 body: $('#body').val(),
-                createdAt: dateToISOButLocal(new Date()),
-                author: {
-                    id: userId
-                }
+                createdAt: dateToISOButLocal(new Date())
+                // ,author: {
+                //     id: userId
+                // }
             };
             console.log(localStorage.getItem('userInfo'));
             console.log('Post data:', JSON.stringify(postData));
